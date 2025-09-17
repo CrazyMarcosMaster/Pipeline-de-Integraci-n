@@ -1,25 +1,25 @@
-name: CI
+name: Python CI
 
-on:            # Cuándo se ejecuta
-  push:        # cada vez que hagas git push
+on:
+  push:
     branches: [ main ]
   pull_request:
+    branches: [ main ]
 
 jobs:
   build:
-    runs-on: ubuntu-latest   # Servidor donde corre
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Instalar dependencias
-        run: pip install -r requirements.txt
-
-      - name: Ejecutar tests
-        run: pytest
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest
+    - name: Run tests
+      run: |
+        pytest
